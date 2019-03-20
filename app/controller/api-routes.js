@@ -3,7 +3,8 @@ var express = require('express')
 var axios = require("axios");
 var cheerio = require("cheerio");
 var mongojs = require("mongojs")
-var article = require("../models/article")
+var Article = require("../models/article")
+var mongoose = require("mongoose");
 
 //setup router access
 var app = express.Router();
@@ -12,11 +13,14 @@ var app = express.Router();
 var databaseUrl = "scraper";
 var collections = ["scrapedData"];
 
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function (error) {
-    console.log("Database Error:", error);
-});
+mongoose.connect("mongodb://localhost/scraper", { useNewUrlParser: true });
+
+// // Hook mongojs configuration to the db variable
+// var db = mongojs(databaseUrl, collections);
+
+// db.on("error", function (error) {
+//     console.log("Database Error:", error);
+// });
 
 app.get("/", function (req, res) {
     res.send("Hello world");
@@ -52,23 +56,28 @@ app.get("/scrape", (req, res) => {
         // NOTE: Cheerio selectors function similarly to jQuery's selectors,
         // but be sure to visit the package's npm page to see how it works
         $("article.churn").each(function (i, element) {
-
             var title = $(element).children().text();
             var link = $(element).find("a").attr("href");
             // Save these results in an object that we'll push into the results array we defined earlier
-            article = {
+            scrape = {
                 title,
                 link
             }
-            let testArticle = db.scrapedData.find({ 'title': article.title })
-            if (testArticle) { console.log("Article already logged in db") }
-            else {
-                article.create(article);
-                console.log(article);
-            }
+            Article.create({Title: scrape.title, Link: scrape.link }).then(function(data){
+                console.log(data);
+            }).catch(function(err){
+                console.log(err);
+            })
         });
     })
-    res.json();
+    res.json()
+})
+
+app.get("/search", (req,res) => {
+    Article.find({Title: "test"}).exec((err,data) => {
+        if(err){console.log(err)};
+        console.log(data)
+    })
 })
 
 module.exports = app;

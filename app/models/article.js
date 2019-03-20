@@ -9,14 +9,15 @@ var Schema = mongoose.Schema;
 var Article = new Schema({
   // `string` must be of type String. We "trim" it to remove any trailing white space
   // `string` is a required field, and a custom error message is thrown if it is not supplied
-  string: {
+  Title: {
     type: String,
-    required: "String is Required"
+    required: "String is Required",
+    unique: true,
   },
   // `number` is of type Number
   // `number` must be unique
   // `number` is required. The default mongoose error message is thrown if it is not supplied
-  link: {
+  Link: {
     type: String,
     required: true
   },
