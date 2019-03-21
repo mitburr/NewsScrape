@@ -1,0 +1,24 @@
+<h1>Articles</h1>
+
+<h3>Well you can use this platform, but MPR's website is certainly better. </h3>
+<p>article: {{article}}</p>
+<ul id="unsaved">
+    {{#each article}}
+     <h1>test: {{article}}</h1>
+    {{/each}}
+</ul>
+
+{{!-- <ul id = "devoured">
+  {{#each burgers}}
+    {{#if devoured}}
+      {{> burger-block devoured=true}}
+    {{/if}}
+  {{/each}}
+</ul> --}}
+
+
+<form action="/scrape" method="POST">
+    <textarea type="text" name="burger" id = "burger"></textarea>
+
+    <button type="submit">Submit</button>
+</form>

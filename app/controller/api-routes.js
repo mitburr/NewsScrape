@@ -10,17 +10,7 @@ var mongoose = require("mongoose");
 var app = express.Router();
 
 // Database configuration
-var databaseUrl = "scraper";
-var collections = ["scrapedData"];
-
 mongoose.connect("mongodb://localhost/scraper", { useNewUrlParser: true });
-
-// // Hook mongojs configuration to the db variable
-// var db = mongojs(databaseUrl, collections);
-
-// db.on("error", function (error) {
-//     console.log("Database Error:", error);
-// });
 
 app.get("/", function (req, res) {
     res.send("Hello world");
@@ -28,17 +18,20 @@ app.get("/", function (req, res) {
 
 app.get("/all", function (req, res) {
 
-    db.scrapedData.find({}, function (err, data) {
+    Article.find({}, function (err, data) {
         // Log any errors if the server encounters one
         if (err) {
             console.log(err);
         }
         else {
-            // Otherwise, send the result of this query to the browser
-            res.json(data);
+            var hbsObject = {
+                article: data
+            };
+            console.log(hbsObject.article[0].Title);
+            res.render("index", hbsObject);
         }
     });
-})
+});
 
 
 app.get("/scrape", (req, res) => {
@@ -63,9 +56,9 @@ app.get("/scrape", (req, res) => {
                 title,
                 link
             }
-            Article.create({Title: scrape.title, Link: scrape.link }).then(function(data){
+            Article.create({ Title: scrape.title, Link: scrape.link }).then(function (data) {
                 console.log(data);
-            }).catch(function(err){
+            }).catch(function (err) {
                 console.log(err);
             })
         });
@@ -73,9 +66,9 @@ app.get("/scrape", (req, res) => {
     res.json()
 })
 
-app.get("/search", (req,res) => {
-    Article.find({Title: "test"}).exec((err,data) => {
-        if(err){console.log(err)};
+app.get("/search", (req, res) => {
+    Article.find({ Title: "test" }).exec((err, data) => {
+        if (err) { console.log(err) };
         console.log(data)
     })
 })
