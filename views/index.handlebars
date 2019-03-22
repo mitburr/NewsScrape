@@ -13,7 +13,7 @@
   <li>
     <a href = {{Link}}>Article name: {{Title}} \n</a>
     <p>{{Description}}{{Id}}</p>
-    <button class="save" data-newSaved="{{Saved}}" data-idNumber="{{Id}}">
+    <button class="save" data-newSaved="{{Saved}}" data-idNumber={{Id}}>
       {{#unless Saved}}Save article {{else}}Unsave article{{/unless}}
     </button>
   </li>

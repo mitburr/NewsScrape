@@ -3,11 +3,10 @@ $(function() {
         console.log("neato article homie")
       var id = $(this).data("idNumber");
       var newSaved = !$(this).data("newSaved");
-      var idNumber = !$(this).data("idNumber")
-      console.log(idNumber)
+      console.log(id)
       var data = {
           Saved: newSaved,
-            idNumber: idNumber,
+            idNumber: id,
         };
         console.log(data);
   
