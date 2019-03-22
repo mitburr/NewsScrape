@@ -1,6 +1,7 @@
 // Dependencies
 var express = require("express");
 var mongojs = require("mongojs");
+var mongoose = require("mongoose")
 // Require axios and cheerio. This makes the scraping possible
 
 
@@ -24,10 +25,9 @@ var databaseUrl = "scraper";
 var collections = ["scrapedData"];
 
 // Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function (error) {
-    console.log("Database Error:", error);
-});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+mongoose.connect(MONGODB_URI);
 
 var routes = require('./controller/api-routes');
 app.use(routes);

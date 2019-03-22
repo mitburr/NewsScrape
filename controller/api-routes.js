@@ -12,8 +12,11 @@ var app = express.Router();
 // Database configuration
 mongoose.connect("mongodb://localhost/scraper", { useNewUrlParser: true });
 
+app.get("/", function(req, res) {
+  res.redirect("/home");
+});
 
-app.get("/", function (req, res) {
+app.get("/home", function (req, res) {
 
     Article.find({},{}, function (err, data) {
         // Log any errors if the server encounters one
