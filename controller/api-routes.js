@@ -12,27 +12,54 @@ var app = express.Router();
 // Database configuration
 mongoose.connect("mongodb://localhost/scraper", { useNewUrlParser: true });
 
+
 app.get("/", function (req, res) {
-    res.send("Hello world");
-});
 
-app.get("/all", function (req, res) {
-
-    Article.find({}, function (err, data) {
+    Article.find({},{}, function (err, data) {
         // Log any errors if the server encounters one
         if (err) {
             console.log(err);
         }
         else {
+            articleArray ={}
+            for(i in data){
+                let articleDataArray = data[i].Title.split("   \n        \n        ")
+                let Title = articleDataArray[0];
+                let Description = articleDataArray[1];
+                let Link = data[i].Link;
+                let Saved = data[i].Saved
+                let Id = data[i]._id
+                let article = {
+                    Id,
+                    Title,
+                    Description,
+                    Link,
+                    Saved,
+                }
+                articleArray[i] = article;
+            }
             var hbsObject = {
-                article: data
+                article: articleArray,
             };
-            console.log(hbsObject.article[0].Title);
             res.render("index", hbsObject);
         }
     });
 });
 
+app.put("/save/:id", function(req, res) {
+    var condition = {Id: req.params.id};
+    var update = req.body
+    console.log(condition,update)
+    Article.findOneAndUpdate(condition, update, (err, numAffected)=>{
+        if(err){res.json(err)}
+        else{
+            res.redirect("/")
+        }
+    })
+  });
+  
+
+app.put("/comment")
 
 app.get("/scrape", (req, res) => {
 

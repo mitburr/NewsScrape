@@ -21,6 +21,11 @@ var Article = new Schema({
     type: String,
     required: true
   },
+  Saved: {
+    type: Boolean,
+    required: "String is Required",
+    default: false,
+  }
 });
 
 // This creates our model from the above schema, using mongoose's model method

@@ -29,7 +29,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-var routes = require('./app/controller/api-routes');
+var routes = require('./controller/api-routes');
 app.use(routes);
 
 /* -/-/-/-/-/-/-/-/-/-/-/-/- */
