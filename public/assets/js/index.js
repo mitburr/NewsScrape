@@ -26,12 +26,13 @@ $(function() {
 });  
 $(function(){
     $("#scrape").on("click", function(event){
+        console.log("scraping")
         $.ajax("/scrape",{
             type:"GET",
         }).then(
             function(){
-                console.log(scraped);
-                location.reload
+                console.log("scraped");
+                location.reload();
             }
         )
     })

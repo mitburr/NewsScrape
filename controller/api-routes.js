@@ -93,7 +93,7 @@ app.get("/scrape", (req, res) => {
             })
         });
     })
-    res.json()
+    res.redirect("/")
 })
 
 app.get("/search", (req, res) => {
