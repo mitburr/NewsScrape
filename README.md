@@ -36,7 +36,7 @@
 <p>I was completely unable to get a PUT route to work. This means the save and comment uses are impossible to complete. The buttons on the webpage are able to make calls, which I will demonstrate, but I can't get any identifying data to pass. The only data which passes is booleans or undefined. </p>
 
 <h5>For example, here I try to pass _id from the article document in addition to the changed save state, but it passes as a value of undefined for some reason, even though I'm able to render the id on the webpage succesfully.</h5>
-![Passing ID broken](NewsScrape/public/assets/images/demonstrationGif.gif)
+![Passing ID broken](/public/assets/images/demonstrationGif.gif)
 
 
 <hr>
